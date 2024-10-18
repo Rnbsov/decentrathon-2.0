@@ -6,30 +6,32 @@ from app.services.user import add_user,get_user_by_tg_id
 from database.settings import doc_orders
 import hashlib, os, hmac
 
-#проверка епта
 TELEGRAM_BOT_TOKEN = os.getenv("TELEGRAM_BOT_TOKEN")
 if not TELEGRAM_BOT_TOKEN:
     raise ValueError("Please set the TELEGRAM_BOT_TOKEN environment variable.")
 
 SECRET_KEY = hashlib.sha256(TELEGRAM_BOT_TOKEN.encode()).digest()
 
-def check_init_data(init_data: dict, secret_key: bytes) -> bool:
+
+async def check_init_data(init_data: dict, secret_key: bytes) -> bool:
     check_string = "\n".join([f"{k}={v}" for k, v in sorted(init_data.items()) if k != "hash"])
     secret_hash = hmac.new(secret_key, check_string.encode(), hashlib.sha256).hexdigest()
     return secret_hash == init_data.get("hash")
 
+
 api_router: APIRouter = APIRouter()
+
 
 @api_router.post("/auth", response_model=User)
 async def api_auth(body: Dict[str, str] = Body(...)):
-    tg_id: int = body.get("telegram_id")
+    tg_id: int = body.get("tg_id")
     username: str = body.get("username")
     name: str = body.get("name")
-    surname: str = body.get("last_name")
-    avatar_url: str = body.get("photo_url")
+    surname: str = body.get("surname")
+    avatar_url: str = body.get("avatar_url")
 
-    if not check_init_data(body, SECRET_KEY):
-        raise HTTPException(status_code=403, detail="Invalid initData")
+    # if not await check_init_data(body, SECRET_KEY):
+        # raise HTTPException(status_code=403, detail="Invalid initData")
 
     if not tg_id:
         return JSONResponse(content={"result": 400, "data": "Неверный формат данных."}, status_code=400)
