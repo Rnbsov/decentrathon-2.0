@@ -1,6 +1,7 @@
 from fastapi import APIRouter, Body, HTTPException
 from fastapi.responses import JSONResponse
 from typing import Dict
+from app.services.doc import add_doctor,get_doctor_by_doctor_id
 from app.models.schemas import User
 from app.models.schemas import Doctors
 from app.services.user import add_user, get_user_by_tg_id
@@ -73,7 +74,7 @@ async def api_auth(tg_id: int):
     user["_id"] = str(user["_id"])
     return {"user": user}
 
-@api_router.get("/doctors/{speciality}")
+@api_router.get("/doctors")
 async def api_get_doctor(speciality: str):
     doctors = await doc_orders.find().to_list({"speciality": speciality})
 
