@@ -36,9 +36,10 @@ if not TELEGRAM_BOT_TOKEN:
 
 SECRET_KEY = hashlib.sha256(TELEGRAM_BOT_TOKEN.encode()).digest()
 
+#=======================NEED PZDC TEST============================
 
 async def convert_mp3_to_wav(mp3_file_path: str, wav_file_path: str):
-    audio = AudioSegment.from_mp3(mp3_file_path)
+    audio = AudioSegment.from_mp3(mp3_file_path) #using ffmpeg
     audio.export(wav_file_path, format="wav")
 
 
@@ -54,6 +55,7 @@ def transcribe_audio(wav_file_path: str) -> str:
             return "Sorry, could not understand the audio."
         except sr.RequestError as e:
             return f"Could not request results from Google Web Speech API; {e}"
+#===================================================
 
 
 async def request_to_openai(jsonl, message):
@@ -81,6 +83,7 @@ async def check_init_data(init_data: dict, secret_key: bytes) -> bool:
     return secret_hash == init_data.get("hash")
 
 api_router: APIRouter = APIRouter()
+
 
 @api_router.post("/auth", response_model=User)
 async def api_auth(body: Dict[str, str] = Body(...)):
@@ -120,6 +123,7 @@ async def api_auth(tg_id: int):
     user["_id"] = str(user["_id"])
     return {"user": user}
 
+#=====================NEED TEST==============================
 @api_router.get("/doctors/{speciality}")
 async def api_get_doctor(speciality: str):
     doctors = await doc_orders.find({"speciality": speciality}).to_list(length=100)
@@ -131,6 +135,7 @@ async def api_get_doctor(speciality: str):
         doctor["_id"] = str(doctor["_id"])
 
     return {"doctors": doctors}
+
 
 @api_router.post("/doctors" ,response_model=Doctors)
 async def api_add_doctor(body: Dict[str, str] = Body(...)):
@@ -159,7 +164,11 @@ async def api_add_doctor(body: Dict[str, str] = Body(...)):
     except Exception as e:
         print(e)
         return JSONResponse(content={"result": 500, "data": "Произошла ошибка."}, status_code=500)
+#===================================================
 
+
+
+# работает не трогай,ок да?
 
 @api_router.post("/api/v1/sendMessage")
 async def api_send_message(body: Dict[str, str] = Body(...)):
@@ -191,6 +200,7 @@ async def api_send_message(body: Dict[str, str] = Body(...)):
     return JSONResponse(content={"result": 201, "user_data": user_data}, status_code=201)
 
 
+# работает не трогай,ок да?
 
 @api_router.post("/api/v1/request_to_openai")
 async def api_request_to_openai(body: Dict[str, str] = Body(...)):
@@ -215,6 +225,7 @@ async def api_request_to_openai(body: Dict[str, str] = Body(...)):
         return JSONResponse(content={"result": 500, "data": "Произошла ошибка при запросе к OpenAI."}, status_code=500)
     
 
+#===================NEED PZDCPZDC TESTS================================
 
 
 @api_router.post("/api/v1/upload_mp3_to_text")
@@ -247,3 +258,4 @@ async def upload_mp3_to_text(file: UploadFile = File(...)):
 
     except Exception as e:
         return JSONResponse(content={"result": 500, "message": f"An error occurred: {e}"}, status_code=500)
+#===================================================
