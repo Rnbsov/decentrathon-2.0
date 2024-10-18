@@ -74,12 +74,15 @@ async def api_auth(tg_id: int):
     user["_id"] = str(user["_id"])
     return {"user": user}
 
-@api_router.get("/doctors")
+@api_router.get("/doctors/{speciality}")
 async def api_get_doctor(speciality: str):
-    doctors = await doc_orders.find().to_list({"speciality": speciality})
+    doctors = await doc_orders.find({"speciality": speciality}).to_list(length=100)
 
     if not doctors:
         raise HTTPException(status_code=404, detail="Доктора с такой специальностей не найдены.")
+
+    for doctor in doctors:
+        doctor["_id"] = str(doctor["_id"])
 
     return {"doctors": doctors}
 
