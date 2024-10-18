@@ -1,17 +1,17 @@
-import { LaunchParams, ThemeParams } from '@telegram-apps/sdk-react'
+import { LaunchParams, ThemeParams, initDataState, miniAppState, viewportState } from '@telegram-apps/sdk-react'
 import { create } from 'zustand'
 
 interface MiniAppState {
-  initData: any | null
+  initData: typeof initDataState | null
   lp: LaunchParams | null
-  miniApp: any | null
+  miniApp: typeof miniAppState | null
   themeParams: ThemeParams | null
-  viewport: any | null
-  setInitData: (data: any) => void
+  viewport: typeof viewportState | null
+  setInitData: (data: typeof initDataState) => void
   setLaunchParams: (params: LaunchParams) => void
-  setMiniApp: (app: any) => void
+  setMiniApp: (app: typeof miniAppState) => void
   setThemeParams: (params: ThemeParams) => void
-  setViewport: (viewport: any) => void
+  setViewport: (viewport: typeof viewportState) => void
 }
 
 export const useMiniAppStore = create<MiniAppState>((set) => ({
