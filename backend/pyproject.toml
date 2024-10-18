@@ -33,6 +33,7 @@ typing-extensions = "4.12.2"
 urllib3 = "2.2.3"
 userpath = "1.9.2"
 uvicorn = "0.30.6"
+openai = "^1.52.0"
 
 
 [build-system]
