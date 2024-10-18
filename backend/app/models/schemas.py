@@ -23,10 +23,12 @@ class User_data(BaseModel):
 
 class OpenAI_Answer(BaseModel):
     uid: UUID
+    user_id: str
     created_at: datetime
     answer: str
     emergence: str
     language: str
+
 
 class Doctors(BaseModel):
     uid: UUID
