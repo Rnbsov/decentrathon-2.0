@@ -4,7 +4,12 @@ from typing import Dict
 from app.models.schemas import User
 from app.services.user import add_user,get_user_by_tg_id
 from database.settings import doc_orders
+from openai import OpenAI
 import hashlib, os, hmac
+import asyncio
+
+API_KEY=os.getenv("OPENAI_API_KEY") 
+client = OpenAI(api_key=API_KEY)
 
 TELEGRAM_BOT_TOKEN = os.getenv("TELEGRAM_BOT_TOKEN")
 if not TELEGRAM_BOT_TOKEN:
@@ -12,6 +17,22 @@ if not TELEGRAM_BOT_TOKEN:
 
 SECRET_KEY = hashlib.sha256(TELEGRAM_BOT_TOKEN.encode()).digest()
 
+
+async def request_to_openai(xd):
+    completion = client.chat.completions.create(
+        model = "gpt-4o-mini",
+        messages=[
+        {"role": "system", "content": "Ты консультант и помощник ИИ в сфере медицины.Отвечай подробно и лаконично пациентам по их запросу."},
+
+        {
+            "role": "user",
+            "content": f"{xd}"
+        }
+    ]
+
+    )
+
+    return completion.choices[0].message
 
 async def check_init_data(init_data: dict, secret_key: bytes) -> bool:
     check_string = "\n".join([f"{k}={v}" for k, v in sorted(init_data.items()) if k != "hash"])
@@ -29,7 +50,7 @@ async def api_auth(body: Dict[str, str] = Body(...)):
     name: str = body.get("name")
     surname: str = body.get("surname")
     avatar_url: str = body.get("avatar_url")
-
+    
     # if not await check_init_data(body, SECRET_KEY):
         # raise HTTPException(status_code=403, detail="Invalid initData")
 
@@ -45,7 +66,8 @@ async def api_auth(body: Dict[str, str] = Body(...)):
             tg_id=tg_id,name=name,surname=surname,
             avatar_url=avatar_url,username=username
                 )
-        
+        data = await request_to_openai(xd=name)
+        print(data)
         return JSONResponse(content={"result": 201, "user": user}, status_code=201)
     
     except Exception as e:  
