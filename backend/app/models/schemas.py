@@ -18,7 +18,7 @@ class User_data(BaseModel):
     weight: int
     age: datetime
     sex: str
-    symptomes: str
+    symptoms: str
 
 
 class OpenAI_Answer(BaseModel):
@@ -27,3 +27,16 @@ class OpenAI_Answer(BaseModel):
     answer: str
     emergence: str
     language: str
+
+class Doctors(BaseModel):
+    uid: UUID
+    doctor_id: str
+    name: str
+    surname: str
+    avatar_url: str = None
+    speciality: str
+    experience: int
+    rating: float
+    price: float
+    description: str
+    email: str
