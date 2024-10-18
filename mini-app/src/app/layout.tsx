@@ -1,6 +1,7 @@
 import '@telegram-apps/telegram-ui/dist/styles.css'
 import type { Metadata } from 'next'
 import { getLocale } from 'next-intl/server'
+import { Nunito } from 'next/font/google'
 import 'normalize.css/normalize.css'
 import type { PropsWithChildren } from 'react'
 
@@ -9,11 +10,14 @@ import { Root } from '@/components/Root/Root'
 
 import './_assets/globals.css'
 import { I18nProvider } from '@/core/i18n/provider'
+import { cn } from '@/core/utils'
 
 export const metadata: Metadata = {
   title: 'Your Application Title Goes Here',
   description: 'Your application description goes here'
 }
+
+const nunito = Nunito({ subsets: ['latin'] })
 
 export default async function RootLayout({ children }: PropsWithChildren) {
   const locale = await getLocale()
@@ -23,10 +27,10 @@ export default async function RootLayout({ children }: PropsWithChildren) {
       <body>
         <I18nProvider>
           <Root>
-            <div className='w-full md:flex max-w-[100vw]'>
+            <div className='w-full md:flex max-w-[100vw] flex flex-col h-screen'>
               {/* <Topbar /> */}
 
-              <section className='flex flex-1'>{children}</section>
+              <section className={cn(nunito.className, 'flex-1')}>{children}</section>
 
               <Bottombar />
             </div>
