@@ -4,6 +4,7 @@ import { getLocale } from 'next-intl/server'
 import 'normalize.css/normalize.css'
 import type { PropsWithChildren } from 'react'
 
+import { Bottombar } from '@/components/BottomBar/Bottombar'
 import { Root } from '@/components/Root/Root'
 
 import './_assets/globals.css'
@@ -21,7 +22,15 @@ export default async function RootLayout({ children }: PropsWithChildren) {
     <html lang={locale}>
       <body>
         <I18nProvider>
-          <Root>{children}</Root>
+          <Root>
+            <div className='w-full md:flex max-w-[100vw]'>
+              {/* <Topbar /> */}
+
+              <section className='flex flex-1'>{children}</section>
+
+              <Bottombar />
+            </div>
+          </Root>
         </I18nProvider>
       </body>
     </html>
