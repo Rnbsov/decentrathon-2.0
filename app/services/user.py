@@ -5,10 +5,16 @@ import fastapi
 
 
 
-async def add_user(email: str, password : str) -> dict:
+async def add_user(tg_id: int, name: str, 
+                   surname: str,avatar_url: str = None,
+                   username: str = None
+                   ) -> dict:
     user : dict = {
-        "email" : email,
-        "password" : password,
+        "tg_id" : tg_id,
+        "username" : username,
+        "name": name,
+        "surname": surname,
+        "avatar_url": avatar_url
         
     }
     inserted_user = await doc_orders.insert_one(user)
@@ -19,8 +25,8 @@ async def add_user(email: str, password : str) -> dict:
     return doc_order
 
 
-async def get_user_by_email(email: str) -> dict:
-    existing_user = await doc_orders.find_one({"email": email})
+async def get_user_by_tg_id(tg_id: int) -> dict:
+    existing_user = await doc_orders.find_one({"tg_id": tg_id})
     if existing_user:
         existing_user["_id"] = str(existing_user["_id"])  
     return existing_user

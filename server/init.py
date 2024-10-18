@@ -26,7 +26,7 @@ async def create_app() -> FastAPI:
     try:
         await check_connection()
         
-        if "userz" not in await database.list_collection_names():
+        if "decentrathon" not in await database.list_collection_names():
             print("Collection 'carts' does not exist. Creating...")
             
             

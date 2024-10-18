@@ -13,7 +13,7 @@ database_name = os.environ.get("DATABASE_NAME")
 try:
     mongodb_client = AsyncIOMotorClient(mongodb_uri)
     database = mongodb_client[database_name]
-    doc_orders = database["userz"]
+    doc_orders = database["decentrathon"]
 
     
     async def check_connection():
