@@ -1,4 +1,4 @@
-from fastapi import APIRouter, Body, HTTPException
+from fastapi import APIRouter, Body, HTTPException,UploadFile,File
 from fastapi.responses import JSONResponse
 from typing import Dict
 from app.services.doc import add_doctor,get_doctor_by_doctor_id
@@ -10,7 +10,13 @@ from app.services.user import (add_user, get_user_by_tg_id,
 from app.services.ai import get_answer_by_user_id,add_answer
 from database.settings import doc_orders
 from openai import OpenAI
+from datetime import datetime
+from pathlib import Path
+from pydub import AudioSegment
 
+
+import aiofiles
+import speech_recognition as sr
 import hashlib, os, hmac
 import asyncio
 import json
@@ -19,10 +25,36 @@ API_KEY = os.getenv("OPENAI_API_KEY")
 client = OpenAI(api_key=API_KEY)
 TELEGRAM_BOT_TOKEN = os.getenv("TELEGRAM_BOT_TOKEN")
 
+tmp_dir = "/tmp/"
+if not os.path.exists(tmp_dir):
+    os.makedirs(tmp_dir)
+
+
+
 if not TELEGRAM_BOT_TOKEN:
     raise ValueError("Please set the TELEGRAM_BOT_TOKEN environment variable.")
 
 SECRET_KEY = hashlib.sha256(TELEGRAM_BOT_TOKEN.encode()).digest()
+
+
+async def convert_mp3_to_wav(mp3_file_path: str, wav_file_path: str):
+    audio = AudioSegment.from_mp3(mp3_file_path)
+    audio.export(wav_file_path, format="wav")
+
+
+def transcribe_audio(wav_file_path: str) -> str:
+    recognizer = sr.Recognizer()
+    with sr.AudioFile(wav_file_path) as source:
+        audio_data = recognizer.record(source)
+        try:
+            
+            text = recognizer.recognize_google(audio_data, language="ru-RU") 
+            return text
+        except sr.UnknownValueError:
+            return "Sorry, could not understand the audio."
+        except sr.RequestError as e:
+            return f"Could not request results from Google Web Speech API; {e}"
+
 
 async def request_to_openai(jsonl, message):
     try:
@@ -174,9 +206,44 @@ async def api_request_to_openai(body: Dict[str, str] = Body(...)):
 
         openai_response = await request_to_openai(jsonl=user_data, message=user_message)
         formatted_response = openai_response.replace('\n', ' ')
-
+        await add_answer(created_at=datetime.now(),answer = formatted_response,language="ru",
+                         user_id=user_id,emergence="based")
         return JSONResponse(content={"result": 200, "response": formatted_response}, status_code=200)
     
     except Exception as e:
         print(f"Error occurred: {e}")
         return JSONResponse(content={"result": 500, "data": "Произошла ошибка при запросе к OpenAI."}, status_code=500)
+    
+
+
+
+@api_router.post("/api/v1/upload_mp3_to_text")
+async def upload_mp3_to_text(file: UploadFile = File(...)):
+    if file.content_type != "audio/mpeg":
+        raise HTTPException(status_code=400, detail="Invalid file type. Please upload an MP3 file.")
+    
+    try:
+        
+        mp3_file_path = f"/tmp/{file.filename}"
+        wav_file_path = f"/tmp/{file.filename.split('.')[0]}.wav"
+        
+        async with aiofiles.open(mp3_file_path, 'wb') as out_file:
+            content = await file.read()  
+            await out_file.write(content)  
+        
+        
+        await convert_mp3_to_wav(mp3_file_path, wav_file_path)
+
+        
+        text = transcribe_audio(wav_file_path)
+        user_data: dict = {}
+        
+        os.remove(mp3_file_path)
+        os.remove(wav_file_path)
+        airesponse = await request_to_openai(jsonl=user_data, message = text)
+
+        return JSONResponse(content={"result": 200, "response": airesponse}, status_code=200)
+    
+
+    except Exception as e:
+        return JSONResponse(content={"result": 500, "message": f"An error occurred: {e}"}, status_code=500)
