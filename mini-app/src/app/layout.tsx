@@ -5,7 +5,6 @@ import { Nunito } from 'next/font/google'
 import 'normalize.css/normalize.css'
 import type { PropsWithChildren } from 'react'
 
-import { Bottombar } from '@/components/BottomBar/Bottombar'
 import { Root } from '@/components/Root/Root'
 
 import './_assets/globals.css'
@@ -27,13 +26,7 @@ export default async function RootLayout({ children }: PropsWithChildren) {
       <body>
         <I18nProvider>
           <Root>
-            <div className='w-full md:flex max-w-[100vw] flex flex-col h-screen'>
-              {/* <Topbar /> */}
-
-              <section className={cn(nunito.variable, 'flex-1')}>{children}</section>
-
-              <Bottombar />
-            </div>
+            <div className={cn(nunito.variable, 'w-full md:flex max-w-[100vw] flex flex-col h-screen')}>{children}</div>
           </Root>
         </I18nProvider>
       </body>
