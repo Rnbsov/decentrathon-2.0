@@ -16,7 +16,8 @@ const config: Config = {
       colors: {
         primary: '#45B3CB',
         primaryPink: '#ED7390',
-        primaryOrange: '#E59850'
+        primaryOrange: '#E59850',
+        primaryPurple: '#D7D0FF'
       },
       backgroundColor: {
         primaryBg: '#f6f6f6',

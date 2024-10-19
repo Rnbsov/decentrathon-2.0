@@ -3,6 +3,7 @@
 import { initData, miniApp, themeParams, useLaunchParams, useSignal, viewport } from '@telegram-apps/sdk-react'
 import { AppRoot } from '@telegram-apps/telegram-ui'
 import { TonConnectUIProvider } from '@tonconnect/ui-react'
+import { LoaderCircle } from 'lucide-react'
 import { type PropsWithChildren, useEffect } from 'react'
 
 import { ErrorBoundary } from '@/components/ErrorBoundary'
@@ -99,6 +100,8 @@ export function Root(props: PropsWithChildren) {
       <RootInner {...props} />
     </ErrorBoundary>
   ) : (
-    <div className='root__loading'>Loading</div>
+    <div className='root__loading animate-spin'>
+      <LoaderCircle className='stroke-primaryPurple' size={36} />
+    </div>
   )
 }
