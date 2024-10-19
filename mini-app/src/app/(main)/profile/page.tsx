@@ -47,7 +47,7 @@ function Profile() {
           <p className={cn(styles.needhelp, 'font-bold p-4 text-lg')}>Need help?</p>
 
           <p className='p-4'>
-            <p className='text-black/50'> Feel free to write to an email:</p>
+            <p className='text-black/70'> Feel free to write to an email:</p>
             <br />
             <span className='font-bold'>help@med.kz</span>
           </p>
