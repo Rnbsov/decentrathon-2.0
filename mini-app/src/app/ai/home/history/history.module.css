@@ -1,0 +1,48 @@
+.history {
+    @apply py-12 mx-2 md:mx-20;
+}
+
+.history__upper {
+    @apply my-6 mx-[14px] md:mx-4 flex justify-between items-center;
+}
+
+.title {
+    @apply text-[20px];
+}
+
+.see_all {
+    @apply text-[14px] font-black italic opacity-50;
+}
+
+.history__content {
+    @apply flex flex-col gap-2;
+}
+
+.item {
+    @apply p-4 bg-ai_bg_secondary rounded-3xl flex items-center 
+    gap-8 border-solid border-ai_border border-2;
+}
+
+.item__icon {
+    @apply rounded-full p-2;
+}
+
+.item__icon__image {
+    @apply w-[20px] h-[20px];
+}
+
+.item__primary {
+    @apply bg-ai_primary;
+}
+
+.item__pink {
+    @apply bg-ai_primaryPink;
+}
+
+.item__purple {
+    @apply bg-ai_primaryPurple;
+}
+
+.item__text {
+    @apply text-[14px] italic font-bold;
+}

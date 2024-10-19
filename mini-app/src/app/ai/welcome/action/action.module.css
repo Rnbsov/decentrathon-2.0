@@ -1,0 +1,7 @@
+.action {
+    @apply w-full flex justify-center;
+}
+
+.button {
+    @apply py-[24px] mx-2 w-full bg-white text-ai_bg_primary rounded-3xl font-bold;
+}

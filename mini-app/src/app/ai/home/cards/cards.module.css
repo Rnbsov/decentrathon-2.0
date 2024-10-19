@@ -1,0 +1,67 @@
+.cards {
+    @apply mx-2 md:mx-20;
+}
+
+.cards__content {
+    @apply flex gap-2;
+}
+
+/* Side */
+
+.side {
+    @apply grow basis-1;
+}
+
+.side__col {
+    @apply flex flex-col gap-2;
+}
+
+/* Card */
+
+.card {
+    @apply bg-red-100 h-[120px] rounded-3xl p-4 text-black flex flex-col;
+}
+
+.card__primary {
+    @apply bg-ai_primary;
+}
+
+.card__pink {
+    @apply bg-ai_primaryPink;
+}
+
+.card__purple {
+    @apply bg-ai_primaryPurple;
+}
+
+.card__full {
+    @apply h-full;
+}
+
+.card__upper {
+    @apply items-start grow;
+}
+
+.card__upper__content {
+    @apply flex justify-between items-center;
+}
+
+.card__icon {
+    @apply p-2 rounded-full bg-black/20;
+}
+
+.card__icon__image {
+    @apply w-[24px] h-auto;
+}
+
+.card__arrow {
+    @apply p-2;
+}
+
+.card__text {
+    @apply text-[16px] font-black;
+}
+
+.card__text__full {
+    @apply text-[32px];
+}

@@ -15,6 +15,7 @@ import { useTelegramMock } from '@/hooks/useTelegramMock'
 import './styles.css'
 import { setLocale } from '@/core/i18n/locale'
 import { init } from '@/core/init'
+import 'regenerator-runtime/runtime';
 
 function RootInner({ children }: PropsWithChildren) {
   const isDev = process.env.NODE_ENV === 'development'

@@ -1,0 +1,8 @@
+
+.welcome {
+    @apply bg-ai_bg_primary w-[100vw] min-h-[100vh] flex items-center overflow-hidden;
+}
+
+.welcome__content {
+    @apply w-[100%];
+}

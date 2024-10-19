@@ -15,6 +15,18 @@ export const metadata: Metadata = {
   description: 'Your application description goes here'
 }
 
+import { Nova_Square, Nunito } from 'next/font/google'
+import { cn } from '@/core/utils'
+
+const novaSquare = Nova_Square({
+  subsets: ['latin'],
+  weight: '400'
+})
+
+const nunito = Nunito({
+  subsets: ['latin']
+})
+
 export default async function RootLayout({ children }: PropsWithChildren) {
   const locale = await getLocale()
 
@@ -23,13 +35,11 @@ export default async function RootLayout({ children }: PropsWithChildren) {
       <body>
         <I18nProvider>
           <Root>
-            <div className='w-full md:flex max-w-[100vw]'>
-              {/* <Topbar /> */}
+            {/* <Topbar /> */}
 
-              <section className='flex flex-1'>{children}</section>
+            <div className={cn(nunito.className, novaSquare.className)}>{children}</div>
 
-              <Bottombar />
-            </div>
+            {/* <Bottombar /> */}
           </Root>
         </I18nProvider>
       </body>

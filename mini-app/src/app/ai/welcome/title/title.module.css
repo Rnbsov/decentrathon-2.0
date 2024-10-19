@@ -1,0 +1,3 @@
+.title {
+    @apply mt-[450px] max-[400px]:mt-[400px] mb-6 text-[36px] text-center z-10 font-novaSquare flex justify-center;
+}
