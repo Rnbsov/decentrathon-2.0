@@ -9,7 +9,7 @@ interface Props {
 function RecordsPage({ className }: Props) {
   return (
     <div className={className}>
-      <div className='flex flex-col gap-5 m-2'>
+      <div className='flex flex-col gap-5 m-2 font-nunito'>
         {recordsPageLinks.map((link) => (
           <div key={link.title} className='bg-secondaryBg w-full flex-between rounded-2xl p-5'>
             <div className='flex gap-3'>
