@@ -1,7 +1,7 @@
 import xior, { XiorRequestConfig } from 'xior'
 
 const options: XiorRequestConfig = {
-  baseURL: 'http://192.168.173.72:5002/api/v1/', // TODO: extract to env
+  baseURL: process.env.NEXT_PUBLIC_API_BASE_URL || 'http://localhost:5002/',
   headers: {
     'Content-Type': 'application/json'
   }

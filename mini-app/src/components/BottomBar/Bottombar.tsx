@@ -22,7 +22,7 @@ const Bottombar = () => {
             key={link.label}
             className={` flex-center flex-col gap-1 p-2 transition`}
           >
-            <link.icon size={24}  className={cn(isActive ? 'stroke-emerald-500' : 'stroke-rose-500')} />
+            <link.icon size={24}  className={cn(isActive ? 'stroke-primaryPurple' : 'stroke-primary/30')} />
             <p className='tiny-medium text-emerald-900'>{link.label}</p>
           </Link>
         )

@@ -1,9 +1,11 @@
 'use client'
 
-import { initData, miniApp, useLaunchParams, useSignal } from '@telegram-apps/sdk-react'
+import { initData, miniApp, themeParams, useLaunchParams, useSignal, viewport } from '@telegram-apps/sdk-react'
 import { AppRoot } from '@telegram-apps/telegram-ui'
 import { TonConnectUIProvider } from '@tonconnect/ui-react'
+import { LoaderCircle } from 'lucide-react'
 import { type PropsWithChildren, useEffect } from 'react'
+import 'regenerator-runtime/runtime'
 
 import { ErrorBoundary } from '@/components/ErrorBoundary'
 import { ErrorPage } from '@/components/ErrorPage'
@@ -12,10 +14,12 @@ import { useClientOnce } from '@/hooks/useClientOnce'
 import { useDidMount } from '@/hooks/useDidMount'
 import { useTelegramMock } from '@/hooks/useTelegramMock'
 
+import { xiorClassic } from '@/api/instance'
+
 import './styles.css'
 import { setLocale } from '@/core/i18n/locale'
 import { init } from '@/core/init'
-import 'regenerator-runtime/runtime';
+import { useMiniAppStore } from '@/core/store/MiniAppStore'
 
 function RootInner({ children }: PropsWithChildren) {
   const isDev = process.env.NODE_ENV === 'development'
@@ -26,8 +30,61 @@ function RootInner({ children }: PropsWithChildren) {
     useTelegramMock()
   }
 
+  const initDataState = useSignal(initData.state)
   const lp = useLaunchParams()
+  const miniAppState = useSignal(miniApp.state)
+  const themeParamsState = useSignal(themeParams.state)
+  const viewportState = useSignal(viewport.state)
   const debug = isDev || lp.startParam === 'debug'
+
+  const setInitData = useMiniAppStore((state) => state.setInitData)
+  const setLaunchParams = useMiniAppStore((state) => state.setLaunchParams)
+  const setMiniApp = useMiniAppStore((state) => state.setMiniApp)
+  const setThemeParams = useMiniAppStore((state) => state.setThemeParams)
+  const setViewport = useMiniAppStore((state) => state.setViewport)
+
+  useEffect(() => {
+    setInitData(initDataState)
+    setLaunchParams(lp)
+    setMiniApp(miniAppState)
+    setThemeParams(themeParamsState)
+    setViewport(viewportState)
+  }, [
+    initDataState,
+    lp,
+    miniAppState,
+    themeParamsState,
+    viewportState,
+    setInitData,
+    setLaunchParams,
+    setMiniApp,
+    setThemeParams,
+    setViewport
+  ])
+
+  // Sent initData to backend
+  useEffect(() => {
+    const sendInitData = async () => {
+      try {
+        const userData = initDataState?.user
+
+        if (userData) {
+          const dataToSend = {
+            tg_id: userData.id,
+
+            ...userData
+          }
+
+          const response = await xiorClassic.post('/auth', { user: dataToSend }) // Send to the backend
+          console.log('Init data sent successfully:', response.data)
+        }
+      } catch (error) {
+        console.error('Error sending init data:', error)
+      }
+    }
+
+    sendInitData()
+  }, [initDataState])
 
   // Initialize the library.
   useClientOnce(() => {
@@ -70,6 +127,8 @@ export function Root(props: PropsWithChildren) {
       <RootInner {...props} />
     </ErrorBoundary>
   ) : (
-    <div className='root__loading'>Loading</div>
+    <div className='root__loading animate-spin'>
+      <LoaderCircle className='stroke-primaryPurple' size={36} />
+    </div>
   )
 }
