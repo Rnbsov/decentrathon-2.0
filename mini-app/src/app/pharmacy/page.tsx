@@ -1,9 +1,12 @@
+import { backButton } from '@telegram-apps/sdk-react'
 import { ChevronRight } from 'lucide-react'
 import Image from 'next/image'
 
 import { SearchBar } from '@/components/SearchBar/SearchBar'
 
 function Pharmacy() {
+  backButton.mount()
+
   return (
     <>
       <SearchBar className='mt-3' />
