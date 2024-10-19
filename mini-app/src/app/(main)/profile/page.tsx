@@ -13,7 +13,7 @@ function Profile() {
   const initData = useMiniAppStore((state) => state.initData)
 
   return (
-    <List className='w-full min-h-screen text-black'>
+    <List className='w-full min-h-screen text-black font-nunito'>
       <h2 className='h2-bold flex-center'>Profile</h2>
       <div className='relative'>
         <div className='relative bg-primary/50  w-full h-32 rounded-xl'>
@@ -44,7 +44,7 @@ function Profile() {
         </div>
 
         <div className='bg-primaryPurple rounded-2xl min-h-32 my-3 p-4 mx-2'>
-          <p className={cn(styles.needhelp, 'font-bold p-4 text-lg')}>Need help?</p>
+          <p className={cn(styles.needhelp, 'font-bold p-4 text-xl')}>Need help?</p>
 
           <p className='p-4'>
             <p className='text-black/70'> Feel free to write to an email:</p>

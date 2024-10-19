@@ -1,4 +1,24 @@
-import { Activity, Ambulance, ClipboardPlus, Clock, Compass, CreditCard, FileText, FlaskConical, Folder, Heart, HeartPulse, Library, MapPin, Monitor, Share2, ShieldCheck, ShoppingBag, Stethoscope, User } from 'lucide-react'
+import {
+  Activity,
+  Ambulance,
+  ClipboardPlus,
+  Clock,
+  Compass,
+  CreditCard,
+  FileText,
+  FlaskConical,
+  Folder,
+  Heart,
+  HeartPulse,
+  Library,
+  MapPin,
+  Monitor,
+  Share2,
+  ShieldCheck,
+  ShoppingBag,
+  Stethoscope,
+  User
+} from 'lucide-react'
 
 import ConsultationIcon from '../../../public/ConsultationIcon.svg'
 import MedicationIcon from '../../../public/MedicationIcon.svg'
@@ -26,10 +46,11 @@ export const servicesList = [
     icon: ConsultationIcon,
     title: 'Consultation',
     bgColor: 'bg-primary',
+    route: '/consultation',
     label: '89 doctors'
   },
-  { icon: MedicationIcon, title: 'Pharmacy', bgColor: 'bg-primaryPink', label: 'Pharmacies Near' },
-  { icon: MedicationIcon, title: 'Pills', bgColor: 'bg-primaryOrange', label: '6 types of pills' }
+  { icon: MedicationIcon, title: 'Pharmacy', route: '/pharmacy', bgColor: 'bg-primaryPink', label: 'Pharmacies Near' },
+  { icon: MedicationIcon, title: 'Pills', route: '/pharmacy', bgColor: 'bg-primaryOrange', label: '6 types of pills' }
 ]
 
 export const HealthCheckList = [
@@ -111,36 +132,36 @@ export const recordsPageLinks = [
   {
     icon: User,
     title: 'Personal Data',
-    route: '/personal-data',
+    route: '/personal-data'
   },
   {
     icon: Stethoscope,
     title: 'Medical Data',
-    route: '/medical-data',
+    route: '/medical-data'
   },
   {
     icon: Activity,
     title: 'Health Metrics',
-    route: '/health-metrics',
+    route: '/health-metrics'
   },
   {
     icon: Monitor,
     title: 'Condition Monitoring',
-    route: '/condition-monitoring',
+    route: '/condition-monitoring'
   },
   {
     icon: FileText,
     title: 'Notes',
-    route: '/notes',
+    route: '/notes'
   },
   {
     icon: Folder,
     title: 'Files',
-    route: '/files',
+    route: '/files'
   },
   {
     icon: ShieldCheck,
     title: 'Data Collection Consent',
-    route: '/data-consent',
-  },
-];
+    route: '/data-consent'
+  }
+]
