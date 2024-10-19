@@ -1,4 +1,5 @@
 import { ChevronRight, HeartPulse, SearchCheck } from 'lucide-react'
+import Image from 'next/image'
 
 import { cn } from '@/core/utils'
 
@@ -17,7 +18,7 @@ function RecentCheckUps({ className }: Props) {
       <div className='flex flex-col gap-5'>
         <div className='bg-secondaryBg w-full flex-between rounded-[20px] p-5'>
           <div className='flex gap-3'>
-            <HeartPulse className='stroke-red-500' strokeWidth={2} size={28} />
+            <Image src='./BloodDropIcon.svg' alt='blood drop icon' width={28} height={28} />
             <p className='text-lg'>General Blood Analysis</p>
           </div>
 
