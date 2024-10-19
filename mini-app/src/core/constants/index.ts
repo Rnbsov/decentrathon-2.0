@@ -1,4 +1,4 @@
-import { Compass, Library, User, Activity, Ambulance, HeartPulse, ShoppingBag, Heart, FileText, Beaker, ClipboardPlus, CreditCard, MapPin, Clock, Share2 } from 'lucide-react'
+import { Activity, Ambulance, ClipboardPlus, Clock, Compass, CreditCard, FileText, FlaskConical, Heart, HeartPulse, Library, MapPin, Share2, ShoppingBag, User } from 'lucide-react'
 
 import ConsultationIcon from '../../../public/ConsultationIcon.svg'
 import MedicationIcon from '../../../public/MedicationIcon.svg'
@@ -76,7 +76,7 @@ export const profileLinks = [
     label: 'My Prescription'
   },
   {
-    icon: Beaker,
+    icon: FlaskConical,
     route: '/lab-test',
     label: 'Your Lab Test'
   },
