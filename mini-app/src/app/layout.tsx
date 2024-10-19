@@ -32,16 +32,6 @@ export default async function RootLayout({ children }: PropsWithChildren) {
         <I18nProvider>
           <Root>
             <div className={cn(nunito.className, novaSquare.className)}>{children}</div>
-
-            <div
-              className={cn(
-                nunito.variable,
-                novaSquare.className,
-                'w-full md:flex max-w-[100vw] flex flex-col h-screen'
-              )}
-            >
-              {children}
-            </div>
           </Root>
         </I18nProvider>
       </body>
