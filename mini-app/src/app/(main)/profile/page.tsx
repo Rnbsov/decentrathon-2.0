@@ -1,8 +1,10 @@
 'use client'
 
+import { profileLinks } from '@/core/constants'
 import { useMiniAppStore } from '@/core/store/MiniAppStore'
 import { Avatar, Headline, List, Subheadline } from '@telegram-apps/telegram-ui'
 import { Edit } from 'lucide-react'
+import Link from 'next/link'
 
 function Profile() {
   const initData = useMiniAppStore((state) => state.initData)
@@ -22,6 +24,19 @@ function Profile() {
           <Avatar size={128} src={initData?.user?.photoUrl || 'https://fps.cdnpk.net/images/home/subhome-ai.webp?w=649&h=649'} />
           <Headline weight='1'>{(initData?.user?.firstName ?? '') + ' ' + (initData?.user?.lastName ?? '')}</Headline>
           <Subheadline className='text-slate-500'>@{initData?.user?.username}</Subheadline>
+        </div>
+      </div>
+
+      <div className='mt-24'>
+        <div className='mt-2 flex gap-3 flex-col px-2'>
+          {profileLinks.map((link) => (
+            <button className='px-4 py-3 border-b border-black/10 last:border-b-0' key={link.label}>
+              <Link href={link.route} className='flex gap-3'>
+                <link.icon className='stroke-primary-500 ' />
+                <Subheadline className='font-medium'>{link.label}</Subheadline>
+              </Link>
+            </button>
+          ))}
         </div>
       </div>
     </List>
