@@ -18,20 +18,20 @@ export default function Home() {
 
   return (
     <Page back={false}>
-      <div className='text-black p-3 overflow-hidden'>
-        <p className='font-nunito'>
+      <div className='text-black p-3 overflow-hidden font-nunito'>
+        <p className='text-xl'>
           {t('greeting')},<br />
-          <span className='font-bold'>
+          <span className='h2-bold'>
             {(initData?.user?.firstName ?? '') + ' ' + (initData?.user?.lastName ?? '')}
+            👋
           </span>{' '}
-          👋
         </p>
 
-        <Services />
+        <Services className='mt-8' />
 
-        <RecentCheckUps />
+        <RecentCheckUps className='mt-8'/>
 
-        <CheckHealth />
+        <CheckHealth className='mt-8'/>
       </div>
 
       <Link href='/ai/home'>

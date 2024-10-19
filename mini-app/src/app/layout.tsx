@@ -17,7 +17,7 @@ export const metadata: Metadata = {
   description: 'Your application description goes here'
 }
 
-const nunito = Nunito({ subsets: ['latin'] })
+const nunito = Nunito({ subsets: ['latin'], variable: '--font-nunito' })
 
 export default async function RootLayout({ children }: PropsWithChildren) {
   const locale = await getLocale()
@@ -30,7 +30,7 @@ export default async function RootLayout({ children }: PropsWithChildren) {
             <div className='w-full md:flex max-w-[100vw] flex flex-col h-screen'>
               {/* <Topbar /> */}
 
-              <section className={cn(nunito.className, 'flex-1')}>{children}</section>
+              <section className={cn(nunito.variable, 'flex-1')}>{children}</section>
 
               <Bottombar />
             </div>
