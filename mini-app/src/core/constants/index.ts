@@ -1,4 +1,4 @@
-import { Compass, Library, User, Activity, Ambulance, HeartPulse } from 'lucide-react'
+import { Compass, Library, User, Activity, Ambulance, HeartPulse, ShoppingBag, Heart, FileText, Beaker, ClipboardPlus, CreditCard, MapPin, Clock, Share2 } from 'lucide-react'
 
 import ConsultationIcon from '../../../public/ConsultationIcon.svg'
 import MedicationIcon from '../../../public/MedicationIcon.svg'
@@ -56,5 +56,53 @@ export const HealthCheckList = [
   {
     icon: Ambulance,
     title: 'Call Ambulance'
+  }
+]
+
+export const profileLinks = [
+  {
+    icon: ShoppingBag,
+    route: '/my-orders',
+    label: 'My Orders'
+  },
+  {
+    icon: Heart,
+    route: '/wishlist',
+    label: 'My Wishlist'
+  },
+  {
+    icon: FileText,
+    route: '/my-prescription',
+    label: 'My Prescription'
+  },
+  {
+    icon: Beaker,
+    route: '/lab-test',
+    label: 'Your Lab Test'
+  },
+  {
+    icon: ClipboardPlus,
+    route: '/doctor-consultations',
+    label: 'Doctor Consultations'
+  },
+  {
+    icon: CreditCard,
+    route: '/payment-methods',
+    label: 'Payment Methods'
+  },
+  {
+    icon: MapPin,
+    route: '/addresses',
+    label: 'Your Addresses'
+  },
+  {
+    icon: Clock,
+    route: '/pill-reminder',
+    label: 'Pill Reminder'
+  },
+  {
+    icon: Share2,
+    route: '/invite-friends',
+    label: 'Invites Friends'
   }
 ]
