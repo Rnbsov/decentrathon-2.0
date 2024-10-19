@@ -1,9 +1,8 @@
-from fastapi import APIRouter, Body, HTTPException,UploadFile,File
+from fastapi import APIRouter, Body, HTTPException,UploadFile,File,Request
 from fastapi.responses import JSONResponse
 from typing import Dict
 from app.services.doc import add_doctor,get_doctor_by_doctor_id
-from app.models.schemas import User
-from app.models.schemas import Doctors
+from app.models.schemas import Doctors,OpenAI_Answer,User_data,User
 from app.services.user import (add_user, get_user_by_tg_id,
                                get_user_data_by_user_id,add_user_data
                                )
@@ -43,18 +42,19 @@ async def convert_mp3_to_wav(mp3_file_path: str, wav_file_path: str):
     audio.export(wav_file_path, format="wav")
 
 
-def transcribe_audio(wav_file_path: str) -> str:
+async def transcribe_audio_async(wav_file_path: str) -> str:
     recognizer = sr.Recognizer()
     with sr.AudioFile(wav_file_path) as source:
         audio_data = recognizer.record(source)
         try:
-            
-            text = recognizer.recognize_google(audio_data, language="ru-RU") 
-            return text
+            return await asyncio.to_thread(
+                recognizer.recognize_google, audio_data, language="ru-RU"
+            )
         except sr.UnknownValueError:
             return "Sorry, could not understand the audio."
         except sr.RequestError as e:
             return f"Could not request results from Google Web Speech API; {e}"
+
 #===================================================
 
 
@@ -139,6 +139,8 @@ async def api_get_doctor(speciality: str):
 
 @api_router.post("/doctors" ,response_model=Doctors)
 async def api_add_doctor(body: Dict[str, str] = Body(...)):
+    print(Request.body)
+    print('123')
     doctor_id: int = body.get("doctor_id")
     name: str = body.get("name")
     surname: str = body.get("surname")
@@ -149,6 +151,7 @@ async def api_add_doctor(body: Dict[str, str] = Body(...)):
     price: float = body.get("price")
     description: str = body.get("description")
     email: str = body.get("email")
+
 
     if not doctor_id:
         return JSONResponse(content={"result": 400, "data": "Неверный формат данных."}, status_code=400)
@@ -170,7 +173,7 @@ async def api_add_doctor(body: Dict[str, str] = Body(...)):
 
 # работает не трогай,ок да?
 
-@api_router.post("/api/v1/sendMessage")
+@api_router.post("/api/v1/sendMessage",response_model=User_data)
 async def api_send_message(body: Dict[str, str] = Body(...)):
 
     user_id: str = body.get("user_id")
@@ -202,7 +205,7 @@ async def api_send_message(body: Dict[str, str] = Body(...)):
 
 # работает не трогай,ок да?
 
-@api_router.post("/api/v1/request_to_openai")
+@api_router.post("/api/v1/request_to_openai",response_model=OpenAI_Answer)
 async def api_request_to_openai(body: Dict[str, str] = Body(...)):
     user_id = body.get("user_id")
     user_message = body.get("message")
@@ -246,7 +249,7 @@ async def upload_mp3_to_text(file: UploadFile = File(...)):
         await convert_mp3_to_wav(mp3_file_path, wav_file_path)
 
         
-        text = transcribe_audio(wav_file_path)
+        text = transcribe_audio_async(wav_file_path)
         user_data: dict = {}
         
         os.remove(mp3_file_path)

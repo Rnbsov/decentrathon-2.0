@@ -36,9 +36,15 @@ async def create_app() -> FastAPI:
     def custom_openapi():
         if app.openapi_schema:
             return app.openapi_schema
-        app.openapi_schema = app.get_openapi()
+        
+        with open("server/api.yaml", encoding="utf-8") as f:
+            openapi_schema = yaml.safe_load(f)
+            app.openapi_schema = openapi_schema
+            return app.openapi_schema
+        
 
-        # app.openapi = custom_openapi
+    app.openapi = custom_openapi
+
 
     return app
 
