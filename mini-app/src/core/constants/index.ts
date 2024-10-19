@@ -1,4 +1,4 @@
-import { Activity, Ambulance, ClipboardPlus, Clock, Compass, CreditCard, FileText, FlaskConical, Heart, HeartPulse, Library, MapPin, Share2, ShoppingBag, User } from 'lucide-react'
+import { Activity, Ambulance, ClipboardPlus, Clock, Compass, CreditCard, FileText, FlaskConical, Folder, Heart, HeartPulse, Library, MapPin, Monitor, Share2, ShieldCheck, ShoppingBag, Stethoscope, User } from 'lucide-react'
 
 import ConsultationIcon from '../../../public/ConsultationIcon.svg'
 import MedicationIcon from '../../../public/MedicationIcon.svg'
@@ -106,3 +106,41 @@ export const profileLinks = [
     label: 'Invites Friends'
   }
 ]
+
+export const recordsPageLinks = [
+  {
+    icon: User,
+    title: 'Personal Data',
+    route: '/personal-data',
+  },
+  {
+    icon: Stethoscope,
+    title: 'Medical Data',
+    route: '/medical-data',
+  },
+  {
+    icon: Activity,
+    title: 'Health Metrics',
+    route: '/health-metrics',
+  },
+  {
+    icon: Monitor,
+    title: 'Condition Monitoring',
+    route: '/condition-monitoring',
+  },
+  {
+    icon: FileText,
+    title: 'Notes',
+    route: '/notes',
+  },
+  {
+    icon: Folder,
+    title: 'Files',
+    route: '/files',
+  },
+  {
+    icon: ShieldCheck,
+    title: 'Data Collection Consent',
+    route: '/data-consent',
+  },
+];
