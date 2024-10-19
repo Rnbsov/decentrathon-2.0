@@ -12,7 +12,7 @@ function Pharmacy() {
   useEffect(() => {
     backButton.mount()
     return () => {
-      backButton.unmount()
+      backButton.hide()
     }
   }, [])
 
