@@ -1,4 +1,4 @@
-import { Compass, Library, User } from 'lucide-react'
+import { Compass, Library, User, Activity, Ambulance, HeartPulse } from 'lucide-react'
 
 import ConsultationIcon from '../../../public/ConsultationIcon.svg'
 import MedicationIcon from '../../../public/MedicationIcon.svg'
@@ -30,4 +30,31 @@ export const servicesList = [
   },
   { icon: MedicationIcon, title: 'Pharmacy', bgColor: 'bg-primaryPink', label: 'Pharmacies Near' },
   { icon: MedicationIcon, title: 'Pills', bgColor: 'bg-primaryOrange', label: '6 types of pills' }
+]
+
+export const HealthCheckList = [
+  {
+    icon: HeartPulse,
+    title: 'Heart risks'
+  },
+  {
+    icon: Activity,
+    title: 'ECG'
+  },
+  {
+    icon: Ambulance,
+    title: 'Call Ambulance'
+  },
+  {
+    icon: HeartPulse,
+    title: 'Heart risks'
+  },
+  {
+    icon: Activity,
+    title: 'ECG'
+  },
+  {
+    icon: Ambulance,
+    title: 'Call Ambulance'
+  }
 ]
