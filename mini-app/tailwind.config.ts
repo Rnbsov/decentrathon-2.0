@@ -25,8 +25,8 @@ const config: Config = {
         ai_border: '#434343'
       },
       backgroundColor: {
-        primary: '#f6f6f6',
-        secondary: '#ECF2F3',
+        primaryBg: '#f6f6f6',
+        secondaryBg: '#ECF2F3',
         primaryPurple: '#D7D0FF',
 
         ai_primary: '#C6F432',
