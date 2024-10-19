@@ -6,6 +6,11 @@ const config: Config = {
     './src/components/**/*.{js,ts,jsx,tsx,mdx}',
     './src/app/**/*.{js,ts,jsx,tsx,mdx}'
   ],
+  safelist: [
+    'bg-primary',
+    'bg-primaryPink',
+    'bg-primaryOrange',
+  ],
   theme: {
     extend: {
       colors: {
@@ -14,8 +19,8 @@ const config: Config = {
         primaryOrange: '#E59850'
       },
       backgroundColor: {
-        primary: '#f6f6f6',
-        secondary: '#ECF2F3'
+        primaryBg: '#f6f6f6',
+        secondaryBg: '#ECF2F3'
       },
       backgroundImage: {
         'gradient-radial': 'radial-gradient(var(--tw-gradient-stops))',
