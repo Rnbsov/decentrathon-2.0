@@ -1,8 +1,4 @@
 from database.settings import doc_orders
-from datetime import datetime
-from bson.objectid import ObjectId
-import fastapi
-
 
 
 async def add_user(tg_id: int, name: str, 

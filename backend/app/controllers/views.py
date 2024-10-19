@@ -1,7 +1,7 @@
 from fastapi import APIRouter, Body, HTTPException,UploadFile,File,Request
 from fastapi.responses import JSONResponse
 from typing import Dict
-from app.services.doc import add_doctor,get_doctor_by_doctor_id
+from app.services.doc import add_doctor, get_doctor_by_doctor_id
 from app.models.schemas import Doctors,OpenAI_Answer,User_data,User
 from app.services.user import (add_user, get_user_by_tg_id,
                                get_user_data_by_user_id,add_user_data
@@ -15,7 +15,7 @@ from pydub import AudioSegment
 
 
 import aiofiles
-import speech_recognition as sr
+# import speech_recognition as sr
 import hashlib, os, hmac
 import asyncio
 import json
@@ -99,7 +99,7 @@ async def api_auth(body: Dict[str, str] = Body(...)):
     try:
         existing_user = await get_user_by_tg_id(tg_id=tg_id)
         if existing_user:
-            return JSONResponse(content={"result": 400, "data": "Пользователь с таким email уже существует."}, status_code=400)
+            return JSONResponse(content={"result": 400, "data": "Пользователь с таким ID уже существует."}, status_code=400)
 
         user = await add_user(
             tg_id=tg_id, name=name, surname=surname,
@@ -152,11 +152,11 @@ async def api_add_doctor(body: Dict[str, str] = Body(...)):
     description: str = body.get("description")
     email: str = body.get("email")
 
-
-    if not doctor_id:
-        return JSONResponse(content={"result": 400, "data": "Неверный формат данных."}, status_code=400)
-
     try:
+        existing_doctor = await get_doctor_by_doctor_id(doctor_id=doctor_id)
+        if existing_doctor:
+            return JSONResponse(content={"result": 400, "data": "Доктор с таким ID уже существует."}, status_code=400)
+
         doctor = await add_doctor(
             doctor_id=doctor_id, name=name, surname=surname,
             avatar_url=avatar_url, speciality=speciality, experience=experience,
