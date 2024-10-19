@@ -1,0 +1,7 @@
+.waves {
+    @apply relative;
+}
+
+.waves__image {
+    @apply absolute opacity-25 w-[120%] scale-150 mt-14;
+}

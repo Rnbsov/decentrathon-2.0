@@ -1,0 +1,15 @@
+.character {
+    @apply pt-16 relative;
+}
+
+.character__title {
+    @apply mx-auto w-fit text-ai_bg_secondary bg-ai_primary py-2 px-4 rounded-full font-bold;
+}
+
+.character__robot {
+    @apply relative h-auto w-auto flex justify-center;
+}
+
+.character__image {
+    @apply absolute;
+}

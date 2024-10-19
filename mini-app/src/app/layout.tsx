@@ -1,7 +1,7 @@
 import '@telegram-apps/telegram-ui/dist/styles.css'
 import type { Metadata } from 'next'
 import { getLocale } from 'next-intl/server'
-import { Nunito } from 'next/font/google'
+import { Nova_Square, Nunito } from 'next/font/google'
 import 'normalize.css/normalize.css'
 import type { PropsWithChildren } from 'react'
 
@@ -16,6 +16,11 @@ export const metadata: Metadata = {
   description: 'Your application description goes here'
 }
 
+const novaSquare = Nova_Square({
+  subsets: ['latin'],
+  weight: '400'
+})
+
 const nunito = Nunito({ subsets: ['latin'], variable: '--font-nunito' })
 
 export default async function RootLayout({ children }: PropsWithChildren) {
@@ -26,7 +31,7 @@ export default async function RootLayout({ children }: PropsWithChildren) {
       <body>
         <I18nProvider>
           <Root>
-            <div className={cn(nunito.variable, 'w-full md:flex max-w-[100vw] flex flex-col h-screen')}>{children}</div>
+            <div className={cn(nunito.className, novaSquare.className)}>{children}</div>
           </Root>
         </I18nProvider>
       </body>

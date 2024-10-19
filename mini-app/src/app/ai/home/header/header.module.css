@@ -1,0 +1,23 @@
+.header {
+    @apply pt-16 mb-8 mx-6 md:mx-24;
+}
+
+.header__content {
+    @apply flex justify-between items-center;
+}
+
+.header__burger {
+    @apply bg-ai_bg_secondary p-[10px] rounded-full border-2 border-ai_border border-solid;
+}
+
+.header__burger__icon {
+    @apply fill-white w-[15px] h-auto opacity-75;
+}
+
+.header__title {
+    @apply opacity-75;
+}
+
+.header__user {
+    @apply w-[40px] h-[40px] rounded-full;
+}

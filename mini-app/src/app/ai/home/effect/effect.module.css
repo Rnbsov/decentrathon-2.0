@@ -1,0 +1,11 @@
+.effect {
+    @apply relative;
+}
+
+.waves {
+    @apply absolute w-[600px] h-auto right-[-150px] top-0 opacity-10;
+}
+
+.glow {
+    @apply w-[200px] h-[200px] bg-ai_primary absolute -left-24 top-48 rounded-full blur-[128px];
+}

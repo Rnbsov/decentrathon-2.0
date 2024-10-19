@@ -1,0 +1,78 @@
+.talk {
+    @apply w-[100vw] min-h-[100vh] py-8 overflow-hidden flex items-center bg-ai_bg_primary;
+}
+
+.talk__content {
+    @apply w-[100vw] relative;
+}
+
+.title {
+    @apply flex justify-center top-0;
+}
+
+.title__text {
+    @apply text-ai_bg_primary bg-ai_primary rounded-full px-4 py-2 mb-4 font-bold;
+}
+
+.status {
+    @apply flex justify-center gap-2 items-center;
+}
+
+.status__dot {
+    @apply bg-ai_primary w-2 h-2 rounded-full;
+}
+
+.status__text {
+    @apply opacity-50;
+}
+
+.blob {
+    @apply flex justify-center my-16 opacity-50;
+}
+
+.blob__animate {
+    animation-name: blob-rotate;
+    animation-duration: 5s;
+    animation-iteration-count: infinite;
+    animation-timing-function: linear; /* Плавное вращение */
+    @apply scale-110 opacity-100;
+}
+
+.blob__reset {
+    transform: rotate(0deg); /* Сброс к 0deg */
+    transition: .3s ease-in-out;
+}
+
+@keyframes blob-rotate {
+    0% {
+        transform: rotate(0deg);
+    }
+    100% {
+        transform: rotate(360deg); /* Полное вращение */
+    }
+}
+
+.blob__image {
+    @apply w-[250px] h-[250px];
+}
+
+
+.speech {
+    @apply relative flex justify-center mx-6 min-h-[50px];
+}
+
+.speech__text {
+    @apply absolute text-center text-2xl;
+}
+
+.waves {
+    @apply relative;
+}
+
+.waves__image {
+    @apply absolute w-[550px] h-auto -top-[350px] -right-[100px] opacity-30;
+}
+
+.answer {
+    @apply min-h-[300px] mx-6 flex items-center justify-center text-center text-2xl overflow-y-scroll;
+}

@@ -5,6 +5,7 @@ import { AppRoot } from '@telegram-apps/telegram-ui'
 import { TonConnectUIProvider } from '@tonconnect/ui-react'
 import { LoaderCircle } from 'lucide-react'
 import { type PropsWithChildren, useEffect } from 'react'
+import 'regenerator-runtime/runtime'
 
 import { ErrorBoundary } from '@/components/ErrorBoundary'
 import { ErrorPage } from '@/components/ErrorPage'

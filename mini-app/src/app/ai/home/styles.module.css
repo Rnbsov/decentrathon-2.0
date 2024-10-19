@@ -1,0 +1,7 @@
+.home {
+    @apply w-[100vw] min-h-[100vh] bg-ai_bg_primary relative overflow-x-hidden;
+}
+
+.title {
+    @apply my-8 md:mx-20 mx-[25px] text-[32px];
+}
