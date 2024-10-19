@@ -52,6 +52,12 @@ function Talk() {
     );
 }
 
+function Answer() {
+    return (
+        ""
+    )
+}
+
 function Waves() {
     return (
         <div className={styles.waves}>

@@ -23,7 +23,9 @@ function Action(props: {isRecording: boolean, setRecording: Function, setText: F
     const startRecord = () => {
         resetTranscript();
         props.setRecording(true)
-        SpeechRecognition.startListening()
+        SpeechRecognition.startListening({
+            language: "ru_RU"
+        })
     } 
 
     const stopRecord = () => {
