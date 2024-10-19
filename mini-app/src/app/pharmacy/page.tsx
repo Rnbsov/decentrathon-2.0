@@ -1,14 +1,23 @@
+'use client'
+
 import { backButton } from '@telegram-apps/sdk-react'
 import { ChevronRight } from 'lucide-react'
 import Image from 'next/image'
+import { useEffect } from 'react'
 
+import { Page } from '@/components/Page'
 import { SearchBar } from '@/components/SearchBar/SearchBar'
 
 function Pharmacy() {
-  backButton.mount()
+  useEffect(() => {
+    backButton.mount()
+    return () => {
+      backButton.unmount()
+    }
+  }, [])
 
   return (
-    <>
+    <Page>
       <SearchBar className='mt-3' />
 
       <div className='p-4 flex-center flex-col'>
@@ -90,7 +99,7 @@ function Pharmacy() {
           </div>
         </div>
       </div>
-    </>
+    </Page>
   )
 }
 
