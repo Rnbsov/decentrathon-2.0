@@ -28,7 +28,7 @@ async def add_doctor(doctor_id: str, name: str,
 
 
 async def get_doctor_by_doctor_id(doctor_id: str) -> dict:
-    existing_doc = await doc_orders.find_one({"doctor": doctor_id})
+    existing_doc = await doc_orders.find_one({"doctor_id": doctor_id})
     if existing_doc:
         existing_doc["_id"] = str(existing_doc["_id"])
 

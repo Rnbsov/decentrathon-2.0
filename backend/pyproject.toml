@@ -34,6 +34,9 @@ urllib3 = "2.2.3"
 userpath = "1.9.2"
 uvicorn = "0.30.6"
 openai = "^1.52.0"
+pydub = "^0.25.1"
+aiofiles = "^24.1.0"
+python-multipart = "^0.0.12"
 
 
 [build-system]
