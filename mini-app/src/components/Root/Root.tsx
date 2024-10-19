@@ -13,6 +13,8 @@ import { useClientOnce } from '@/hooks/useClientOnce'
 import { useDidMount } from '@/hooks/useDidMount'
 import { useTelegramMock } from '@/hooks/useTelegramMock'
 
+import { xiorClassic } from '@/api/instance'
+
 import './styles.css'
 import { setLocale } from '@/core/i18n/locale'
 import { init } from '@/core/init'
@@ -58,6 +60,30 @@ function RootInner({ children }: PropsWithChildren) {
     setThemeParams,
     setViewport
   ])
+
+  // Sent initData to backend
+  useEffect(() => {
+    const sendInitData = async () => {
+      try {
+        const userData = initDataState?.user
+
+        if (userData) {
+          const dataToSend = {
+            tg_id: userData.id,
+
+            ...userData
+          }
+
+          const response = await xiorClassic.post('/auth', { user: dataToSend }) // Send to the backend
+          console.log('Init data sent successfully:', response.data)
+        }
+      } catch (error) {
+        console.error('Error sending init data:', error)
+      }
+    }
+
+    sendInitData()
+  }, [initDataState])
 
   // Initialize the library.
   useClientOnce(() => {
