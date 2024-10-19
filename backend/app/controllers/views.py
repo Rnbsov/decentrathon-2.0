@@ -167,11 +167,32 @@ async def api_add_doctor(body: Dict[str, str] = Body(...)):
     except Exception as e:
         print(e)
         return JSONResponse(content={"result": 500, "data": "Произошла ошибка."}, status_code=500)
+'''
+@api_router.delete("/all_doctors")
+async def delete_all_doctors():
+    result = await doc_orders.delete_many({"doctor_id": {"$exists": True}})
+    if result.deleted_count == 0:
+        raise HTTPException(status_code=404, detail="No doctors found to delete.")
+    return {"deleted_count": result.deleted_count}
+'''
+
+@api_router.get("/all_doctors")
+async def api_get_all_doctors():
+    doctors = await doc_orders.find({"doctor_id": {"$exists": True}}).to_list(length=100)
+
+    if not doctors:
+        raise HTTPException(status_code=404, detail="Доктора не найдены.")
+
+    for doctor in doctors:
+        doctor["_id"] = str(doctor["_id"])
+
+    return {"doctors": doctors}
+
 #===================================================
 
 
 
-# работает не трогай,ок да?
+# дабуди дабдудай
 
 @api_router.post("/api/v1/sendMessage",response_model=User_data)
 async def api_send_message(body: Dict[str, str] = Body(...)):
