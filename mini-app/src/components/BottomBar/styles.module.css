@@ -1,4 +1,4 @@
  /* Bottom bar */
  .bottombar {
-    @apply z-50 flex justify-between items-center w-full sticky bottom-0 rounded-t-[20px] bg-primary px-5 py-4 md:hidden;
+    @apply z-50 flex justify-between items-center w-full sticky bottom-0 rounded-t-[20px] bg-secondaryBg px-5 py-4 md:hidden;
   }
