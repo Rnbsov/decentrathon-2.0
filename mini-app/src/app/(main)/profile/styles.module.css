@@ -1,0 +1,6 @@
+.needhelp {
+  background-image: linear-gradient(to right, #617c9d 33%, rgba(255, 255, 255, 0) 0%);
+  background-position: bottom;
+  background-size: 19px 1.3px;
+  background-repeat: repeat-x;
+}
