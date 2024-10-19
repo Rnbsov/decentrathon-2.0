@@ -21,9 +21,9 @@ function History() {
             </div>
 
             <div className={styles.history__content}>
-                <Item text='Hello world' type='speech'></Item>
-                <Item text='Hello world' type='image'></Item>
-                <Item text='Hello world' type='chat'></Item>
+                <Item text='My stomach hurts' type='speech'></Item>
+                <Item text='Pain in the head' type='image'></Item>
+                <Item text='Hello Cough tablets' type='chat'></Item>
             </div>
 
         </div>

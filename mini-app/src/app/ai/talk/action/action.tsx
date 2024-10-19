@@ -10,19 +10,26 @@ import micro from './../../../_assets/micro.svg';
 import { useEffect, useState } from 'react';
 
 import SpeechRecognition, {useSpeechRecognition} from 'react-speech-recognition';
+import { useRouter } from 'next/navigation';
 
-function Action(props: {isRecording: boolean, setRecording: Function, setText: Function}) {
+function Action(props: {isRecording: boolean, setRecording: Function, setText: Function, setFinalText: Function}) {
+
+    let router = useRouter();
 
     let {
         transcript,
         listening,
         resetTranscript,
+        finalTranscript,
         browserSupportsSpeechRecognition
       } = useSpeechRecognition();
 
-    const startRecord = () => {
+    const startRecord = (event: any) => {
         resetTranscript();
         props.setRecording(true)
+        props.setFinalText("");
+        event.preventDefault(); 
+
         SpeechRecognition.startListening({
             language: "ru_RU"
         })
@@ -37,6 +44,10 @@ function Action(props: {isRecording: boolean, setRecording: Function, setText: F
         props.setText(transcript);
     }, [transcript])
 
+    useEffect(() => {
+        props.setFinalText(finalTranscript)
+    }, [finalTranscript]);
+
     return (
         <div className={styles.action}>
             <div className={styles.action__content}>
@@ -47,12 +58,14 @@ function Action(props: {isRecording: boolean, setRecording: Function, setText: F
                     onMouseDown={startRecord} 
                     onMouseUp={stopRecord} 
                     onTouchStart={startRecord}
-                    onTouchEnd={stopRecord}>
+                    onTouchEnd={stopRecord}
+                    onTouchCancel={stopRecord}    
+                >
                     <div className={cn(styles.action__item, styles.record)}>
                         <Image className={cn(styles.action__item__icon, styles.record__icon)} src={micro} alt='speech'></Image>
                     </div>
                 </div>
-                <div className="exit">
+                <div className="exit" onClick={() => router.push("/ai/home")}>
                     <div className={cn(styles.action__item, styles.exit)}>
                         <Image className={cn(styles.action__item__icon, styles.exit__icon)} src={exit} alt='exit'></Image>
                     </div>

@@ -9,12 +9,51 @@ import waves from './../../_assets/waves-3.svg';
 
 import { cn } from '@/core/utils';
 import Action from './action/action';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
+import { xiorClassic } from '@/api/instance';
 
 function Talk() {
 
     let [isRecording, setRecording] = useState(false);
     let [text, setText] = useState('');
+    let [finalText, setFinalText] = useState('');
+
+    let [answer, setAnswer] = useState('');
+
+    const fetchData = async () => {
+        console.log("DET")
+        await xiorClassic.post("request_to_openai", {
+            "user_id": "67122d83ae38a25d1d362979",
+            "message": finalText
+        }).then((response) => {
+            setAnswer(response.data.response);
+        }).catch((error) => {
+            setAnswer("ERROR")
+        })
+    }
+
+    // useEffect(() => {
+    //     try {
+    //         navigator.mediaDevices.getUserMedia({ audio: true });
+    //         console.log("Access granted to the microphone");
+    //     } catch (error) {
+    //         console.error("Microphone access denied", error);
+    //     }
+    // }, [])
+
+    useEffect(() => {
+        if (finalText == "") {
+            setAnswer("")
+            return;
+        } 
+        
+        setTimeout(() => {
+            new Promise(async () => {
+                await fetchData();
+            })
+        }, 1000);
+
+    }, [finalText]);
 
     return (
         <div className={styles.talk}>
@@ -29,35 +68,36 @@ function Talk() {
                 </div>
 
                 <div className={styles.status}>
-                    <div className={styles.status__dot}/>
+                    <div className={styles.status__dot} />
                     <div className={styles.status__text}>
                         Online
                     </div>
                 </div>
 
-                <div className={cn(styles.blob, isRecording ? styles.blob__animate : styles.blob__reset)}>
-                    <Image className={styles.blob__image} src={blob} alt='blob__image'></Image>
-                </div>
+                {answer == '' ? (
+                    <div>
+                        <div className={cn(styles.blob, isRecording ? styles.blob__animate : styles.blob__reset)}>
+                            <Image className={styles.blob__image} src={blob} alt='blob__image'></Image>
+                        </div>
 
-                <div className={styles.speech}>
-                    <div className={styles.speech__text}>
-                        {text == "" ? "Чем я могу вам помочь?" : text}
+                        <div className={styles.speech}>
+                            <div className={styles.speech__text}>
+                                {text == "" ? "Чем я могу вам помочь?" : text}
+                            </div>
+                        </div>
                     </div>
-                </div>
+                ) : (
+                    <div className={styles.answer}>
+                        {answer}
+                    </div>
+                )}
 
-                <Action isRecording={isRecording} setRecording={setRecording} setText={setText}></Action>
+                <Action isRecording={isRecording} setRecording={setRecording} setText={setText} setFinalText={setFinalText}></Action>
 
             </div>
         </div>
     );
 }
-
-function Answer() {
-    return (
-        ""
-    )
-}
-
 function Waves() {
     return (
         <div className={styles.waves}>

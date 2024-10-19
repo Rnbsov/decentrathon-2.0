@@ -1,5 +1,5 @@
 .action {
-    @apply mx-6 mt-24;
+    @apply mx-6 mt-24 select-none;
 }
 
 .action__content {
@@ -7,7 +7,12 @@
 }
 
 .action__item {
-    @apply p-3 rounded-full;
+    @apply p-3 rounded-full select-none;
+}
+
+.action__item__icon {
+    -webkit-touch-callout: none; /* Отключает контекстное меню */
+    @apply select-none pointer-events-none;
 }
 
 .keyboard {
@@ -32,4 +37,8 @@
 
 .record__animate {
     @apply scale-110 transition-all;
+}
+
+.record__button {
+    @apply select-none;
 }

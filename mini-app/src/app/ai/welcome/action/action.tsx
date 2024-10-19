@@ -1,16 +1,19 @@
+'use client'
 
-import Link from 'next/link';
 import styles from './action.module.css';
+import { useRouter } from 'next/navigation';
 
 function Action() {
 
-    // const next = () => {
-    //     route.push('/ai/home');
-    // }
+    let router = useRouter();
+
+    const next = () => {
+        router.push('/ai/home');
+    }
 
     return (
         <div className={styles.action}>
-            <button className={styles.button}>
+            <button className={styles.button} onClick={next}>
                 Get Started
             </button>
         </div>

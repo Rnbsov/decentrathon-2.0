@@ -72,3 +72,7 @@
 .waves__image {
     @apply absolute w-[550px] h-auto -top-[350px] -right-[100px] opacity-30;
 }
+
+.answer {
+    @apply min-h-[300px] mx-6 flex items-center justify-center text-center text-2xl overflow-y-scroll;
+}
