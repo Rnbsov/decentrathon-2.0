@@ -99,7 +99,7 @@ export const profileLinks = [
   {
     icon: FlaskConical,
     route: '/lab-test',
-    label: 'Your Lab Test'
+    label: 'Your Lab Tests'
   },
   {
     icon: ClipboardPlus,
