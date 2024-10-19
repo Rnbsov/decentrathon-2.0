@@ -34,7 +34,7 @@ export default function Home() {
         <CheckHealth className='mt-8'/>
       </div>
 
-      <Link href='/ai/home'>
+      <Link href='/ai/welcome'>
         <button className='fixed bottom-[7rem] right-6 bg-[#192521] font-bold size-[58px] flex-center rounded-2xl shadow-lg'>
           <Image src='./fab.svg' alt='fab' width={48} height={48} />
         </button>
