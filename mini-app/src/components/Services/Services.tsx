@@ -13,7 +13,7 @@ function Services({ className }: Props) {
     <div className={cn(className, 'overflow-x-auto flex gap-2')}>
       {servicesList.map((service, index) => (
         <Link href={service.route} key={index}>
-        <div className={cn(service.bgColor, 'rounded-3xl min-w-32 p-5 text-white flex flex-col gap-5')}>
+        <div className={cn(service.bgColor, 'rounded-3xl min-w-32 p-5 h-full text-white flex flex-col gap-5')}>
           <div>
             <Image src={service.icon} alt={service.title} />
           </div>
