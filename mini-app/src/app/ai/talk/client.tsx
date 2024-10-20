@@ -21,7 +21,7 @@ function Talk() {
   const fetchData = async () => {
     console.log('DET')
     await xiorClassic
-      .post('request_to_openai', {
+      .post('api/v1/request_to_openai', {
         user_id: '67122d83ae38a25d1d362979',
         message: finalText
       })
