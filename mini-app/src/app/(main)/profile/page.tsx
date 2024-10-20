@@ -1,9 +1,11 @@
 'use client'
 
-import { useState, useEffect } from 'react'
 import { Avatar, Headline, List, Subheadline } from '@telegram-apps/telegram-ui'
 import { Edit } from 'lucide-react'
 import Link from 'next/link'
+import { useState, useEffect } from 'react'
+
+import { xiorClassic } from '@/api/instance'
 
 import styles from './styles.module.css'
 import { profileLinks } from '@/core/constants'
@@ -18,9 +20,13 @@ function Profile() {
     const user = initData?.user
     const fetchProfilePicture = async () => {
       if (user?.id) {
-        const response = await fetch(`http://localhost:5002/${user.id}`)
-        const data = await response.json()
-        setSrc(data.src)
+        try {
+          const response = await xiorClassic.get(`/${user.id}`)
+          const data = await response.data
+          setSrc(data.src)
+        } catch (error) {
+          console.error('Error fetching profile picture:', error)
+        }
       }
     }
 
@@ -37,10 +43,7 @@ function Profile() {
           </button>
         </div>
         <div className='absolute left-1/2 top-[95%] transform -translate-x-1/2 -translate-y-1/2 flex-center flex-col'>
-          <Avatar
-            size={128}
-            src={src || 'https://fps.cdnpk.net/images/home/subhome-ai.webp?w=649&h=649'}
-          />
+          <Avatar size={128} src={src || 'https://fps.cdnpk.net/images/home/subhome-ai.webp?w=649&h=649'} />
           <Headline weight='1'>{(initData?.user?.firstName ?? '') + ' ' + (initData?.user?.lastName ?? '')}</Headline>
           <Subheadline className='text-slate-500'>@{initData?.user?.username}</Subheadline>
         </div>
