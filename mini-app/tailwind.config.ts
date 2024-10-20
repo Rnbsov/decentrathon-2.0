@@ -13,6 +13,7 @@ const config: Config = {
         primary: '#45B3CB',
         primaryPink: '#ED7390',
         primaryOrange: '#E59850',
+        primaryPurple: '#D7D0FF',
 
         ai_primary: '#C6F432',
         ai_primaryPurple: '#C09FF8',
