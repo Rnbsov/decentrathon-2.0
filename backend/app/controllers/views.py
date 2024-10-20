@@ -25,6 +25,7 @@ import json
 API_KEY = os.getenv("OPENAI_API_KEY")
 client = OpenAI(api_key=API_KEY)
 TOKEN = os.getenv("TELEGRAM_BOT_TOKEN")
+LINK = os.getenv("LINK")
 
 tmp_dir = "/tmp/"
 if not os.path.exists(tmp_dir):
@@ -305,6 +306,6 @@ async def get_user_profile_photos(id: int):
         file_id = current_photo[-1].file_id
 
         file = await bot.get_file(file_id)
-        return {"src": f"https://decentrathon-2-0.onrender.com/bot-api/{file.file_path}"}
+        return {"src": f"{LINK}/bot-api/{file.file_path}"}
 
     return {"src": ""}
