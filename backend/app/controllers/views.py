@@ -61,15 +61,14 @@ async def transcribe_audio_async(wav_file_path: str) -> str:
 #===================================================
 
 
-async def request_to_openai(jsonl, message):
+async def request_to_openai(message):
     try:
-        json_data = json.dumps(jsonl)
         completion = await asyncio.to_thread(
             client.chat.completions.create,
             model="gpt-4",
             messages=[
-                {"role": "system", "content": "Ты консультант и помощник ИИ в сфере медицины. Отвечай подробно и лаконично пациентам по их запросу. Предварительно проанализировав JSON Объект с исходными данными пациента."},
-                {"role": "user", "content": f"JSON: {json_data}, Сообщение пациента: {message}"}
+                {"role": "system", "content": "Вы — консультант и помощник в сфере медицины. Отвечайте лаконично на запросы пользователей, анализируя их данные. Отвечайте в дружелюбной форме, обращаясь на «вы». На неуместные вопросы не реагируйте. По вопросам ментального здоровья предлагайте техники, упражнения или ресурсы для снятия стресса, но не ставьте диагнозов — лишь рекомендуйте возможные и предлагайте записаться к специалисту всегда упоминая MediCare+ Clinic. Делайте вид, что делаете запись"},
+                {"role": "user", "content": f"Сообщение пациента: {message}"}
             ]
         )
         print("test123")
@@ -196,7 +195,7 @@ async def api_get_all_doctors():
 
 # дабуди дабдудай
 
-@api_router.post("/api/v1/sendMessage",response_model=User_data)
+@api_router.post("/api/v1/sendMessage")
 async def api_send_message(body: Dict[str, str] = Body(...)):
 
     user_id: str = body.get("user_id")
@@ -240,7 +239,7 @@ async def api_request_to_openai(body: Dict[str, str] = Body(...)):
         if not user_data:
             return JSONResponse(content={"result": 404, "data": "User data not found."}, status_code=404)
 
-        openai_response = await request_to_openai(jsonl=user_data, message=user_message)
+        openai_response = await request_to_openai(message=user_message)
         formatted_response = openai_response.replace('\n', ' ')
         await add_answer(created_at=datetime.now(),answer = formatted_response,language="ru",
                          user_id=user_id,emergence="based")
@@ -273,11 +272,10 @@ async def upload_mp3_to_text(file: UploadFile = File(...)):
 
         
         text = transcribe_audio_async(wav_file_path)
-        user_data: dict = {}
         
         os.remove(mp3_file_path)
         os.remove(wav_file_path)
-        airesponse = await request_to_openai(jsonl=user_data, message = text)
+        airesponse = await request_to_openai(message = text)
 
         return JSONResponse(content={"result": 200, "response": airesponse}, status_code=200)
     
