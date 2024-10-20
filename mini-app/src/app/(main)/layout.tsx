@@ -7,7 +7,7 @@ import { cn } from '@/core/utils'
 export default async function MainLayout({ children }: PropsWithChildren) {
   return (
     <>
-      <section className={cn('flex-1 w-full md:flex max-w-[100vw] flex flex-col h-screen')}>{children}</section>
+      <section className={cn('flex-1 min-h-screen')}>{children}</section>
 
       <Bottombar />
     </>
