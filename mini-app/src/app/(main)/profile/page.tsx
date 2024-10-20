@@ -1,5 +1,6 @@
 'use client'
 
+import { useState, useEffect } from 'react'
 import { Avatar, Headline, List, Subheadline } from '@telegram-apps/telegram-ui'
 import { Edit } from 'lucide-react'
 import Link from 'next/link'
@@ -11,6 +12,20 @@ import { cn } from '@/core/utils'
 
 function Profile() {
   const initData = useMiniAppStore((state) => state.initData)
+  const [src, setSrc] = useState<string | undefined>(initData?.user?.photoUrl)
+
+  useEffect(() => {
+    const user = initData?.user
+    const fetchProfilePicture = async () => {
+      if (user?.id) {
+        const response = await fetch(`http://localhost:5002/${user.id}`)
+        const data = await response.json()
+        setSrc(data.src)
+      }
+    }
+
+    fetchProfilePicture()
+  }, [initData])
 
   return (
     <List className='w-full min-h-screen text-black font-nunito'>
@@ -24,7 +39,7 @@ function Profile() {
         <div className='absolute left-1/2 top-[95%] transform -translate-x-1/2 -translate-y-1/2 flex-center flex-col'>
           <Avatar
             size={128}
-            src={initData?.user?.photoUrl || 'https://fps.cdnpk.net/images/home/subhome-ai.webp?w=649&h=649'}
+            src={src || 'https://fps.cdnpk.net/images/home/subhome-ai.webp?w=649&h=649'}
           />
           <Headline weight='1'>{(initData?.user?.firstName ?? '') + ' ' + (initData?.user?.lastName ?? '')}</Headline>
           <Subheadline className='text-slate-500'>@{initData?.user?.username}</Subheadline>

@@ -12,8 +12,10 @@ from openai import OpenAI
 from datetime import datetime
 from pathlib import Path
 from pydub import AudioSegment
-
-
+from aiogram import Bot
+import httpx
+from fastapi.responses import StreamingResponse
+import io
 import aiofiles
 # import speech_recognition as sr
 import hashlib, os, hmac
@@ -22,18 +24,18 @@ import json
 
 API_KEY = os.getenv("OPENAI_API_KEY")
 client = OpenAI(api_key=API_KEY)
-TELEGRAM_BOT_TOKEN = os.getenv("TELEGRAM_BOT_TOKEN")
+TOKEN = os.getenv("TELEGRAM_BOT_TOKEN")
 
 tmp_dir = "/tmp/"
 if not os.path.exists(tmp_dir):
     os.makedirs(tmp_dir)
 
+bot = Bot(token=TOKEN)
 
+#if not TELEGRAM_BOT_TOKEN:
+#    raise ValueError("Please set the TELEGRAM_BOT_TOKEN environment variable.")
 
-if not TELEGRAM_BOT_TOKEN:
-    raise ValueError("Please set the TELEGRAM_BOT_TOKEN environment variable.")
-
-SECRET_KEY = hashlib.sha256(TELEGRAM_BOT_TOKEN.encode()).digest()
+#SECRET_KEY = hashlib.sha256(TELEGRAM_BOT_TOKEN.encode()).digest()
 
 #=======================NEED PZDC TEST============================
 
@@ -167,14 +169,13 @@ async def api_add_doctor(body: Dict[str, str] = Body(...)):
     except Exception as e:
         print(e)
         return JSONResponse(content={"result": 500, "data": "Произошла ошибка."}, status_code=500)
-'''
+
 @api_router.delete("/all_doctors")
 async def delete_all_doctors():
     result = await doc_orders.delete_many({"doctor_id": {"$exists": True}})
     if result.deleted_count == 0:
         raise HTTPException(status_code=404, detail="No doctors found to delete.")
     return {"deleted_count": result.deleted_count}
-'''
 
 @api_router.get("/all_doctors")
 async def api_get_all_doctors():
@@ -283,3 +284,27 @@ async def upload_mp3_to_text(file: UploadFile = File(...)):
     except Exception as e:
         return JSONResponse(content={"result": 500, "message": f"An error occurred: {e}"}, status_code=500)
 #===================================================
+
+
+@api_router.get("/bot-api/{file_path:path}")
+async def proxy_file(file_path: str):
+    url = f"https://api.telegram.org/file/bot{TOKEN}/{file_path}"
+    async with httpx.AsyncClient() as client:
+        response = await client.get(url)
+        if response.status_code != 200:
+            raise HTTPException(status_code=response.status_code, detail="Картинки нет ошибочка")
+        return StreamingResponse(io.BytesIO(response.content), media_type=response.headers.get('Content-Type'))
+
+
+@api_router.get("/{id}")
+async def get_user_profile_photos(id: int):
+    user_photos = await bot.get_user_profile_photos(user_id=id)
+
+    if user_photos.total_count > 0:
+        current_photo = user_photos.photos[0]
+        file_id = current_photo[-1].file_id
+
+        file = await bot.get_file(file_id)
+        return {"src": f"http://localhost:5002/bot-api/{file.file_path}"}
+
+    return {"src": ""}
