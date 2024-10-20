@@ -305,6 +305,6 @@ async def get_user_profile_photos(id: int):
         file_id = current_photo[-1].file_id
 
         file = await bot.get_file(file_id)
-        return {"src": f"http://localhost:5002/bot-api/{file.file_path}"}
+        return {"src": f"https://decentrathon-2-0.onrender.com/bot-api/{file.file_path}"}
 
     return {"src": ""}
