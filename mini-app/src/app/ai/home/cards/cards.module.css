@@ -1,5 +1,5 @@
 .cards {
-    @apply mx-2 md:mx-20;
+    @apply mx-2 md:mx-20 relative z-10;
 }
 
 .cards__content {

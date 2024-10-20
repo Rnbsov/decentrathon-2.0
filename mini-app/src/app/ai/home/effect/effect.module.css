@@ -7,5 +7,5 @@
 }
 
 .glow {
-    @apply w-[200px] h-[200px] bg-ai_primary absolute -left-24 top-48 rounded-full blur-[128px];
+    @apply w-[200px] h-[200px] bg-ai_primary absolute -left-24 top-48 rounded-full blur-[128px] opacity-50;
 }

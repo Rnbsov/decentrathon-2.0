@@ -3,5 +3,5 @@
 }
 
 .title {
-    @apply my-8 md:mx-20 mx-[25px] text-[32px];
+    @apply my-8 md:mx-20 mx-[25px] text-[32px] relative z-10;
 }
