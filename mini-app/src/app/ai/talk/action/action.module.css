@@ -1,44 +1,49 @@
 .action {
-    @apply mx-6 mt-24 select-none;
+  @apply mx-6 mt-24 select-none;
 }
 
 .action__content {
-    @apply flex justify-between items-center;
+  @apply flex justify-between items-center;
 }
 
 .action__item {
-    @apply p-3 rounded-full select-none;
+  @apply p-3 rounded-full select-none;
 }
 
 .action__item__icon {
-    -webkit-touch-callout: none; /* Отключает контекстное меню */
-    @apply select-none pointer-events-none;
+  -webkit-touch-callout: none; /* Отключает контекстное меню */
+  @apply select-none pointer-events-none;
+
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
 }
 
 .keyboard {
-    @apply bg-ai_primaryPurple/50;
+  @apply bg-ai_primaryPurple/50;
 }
 
 .exit {
-    @apply bg-ai_bg_secondary border-solid border-2 border-ai_border;
+  @apply bg-ai_bg_secondary border-solid border-2 border-ai_border;
 }
 
 .exit__icon {
-    @apply opacity-50;
+  @apply opacity-50;
 }
 
 .record__icon {
-    @apply w-8 h-8;
+  @apply w-8 h-8;
 }
 
 .record {
-    @apply p-8 bg-ai_primary;
+  @apply p-8 bg-ai_primary;
 }
 
 .record__animate {
-    @apply scale-110 transition-all;
+  @apply scale-110 transition-all;
 }
 
 .record__button {
-    @apply select-none;
+  @apply select-none;
 }
