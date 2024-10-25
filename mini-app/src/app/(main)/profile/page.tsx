@@ -2,6 +2,7 @@
 
 import { Avatar, Headline, List, Subheadline } from '@telegram-apps/telegram-ui'
 import { Edit } from 'lucide-react'
+import Image from 'next/image'
 import Link from 'next/link'
 import { useState, useEffect } from 'react'
 
@@ -43,7 +44,14 @@ function Profile() {
           </button>
         </div>
         <div className='absolute left-1/2 top-[95%] transform -translate-x-1/2 -translate-y-1/2 flex-center flex-col'>
-          <Avatar size={128} src={src || 'https://fps.cdnpk.net/images/home/subhome-ai.webp?w=649&h=649'} />
+          <div className='size-[128px] rounded-full relative overflow-hidden'>
+            <Image
+              alt='avatar'
+              src={src || 'https://fps.cdnpk.net/images/home/subhome-ai.webp?w=649&h=649'}
+              className='object-cover'
+              fill
+            />
+          </div>
           <Headline weight='1'>{(initData?.user?.firstName ?? '') + ' ' + (initData?.user?.lastName ?? '')}</Headline>
           <Subheadline className='text-slate-500'>@{initData?.user?.username}</Subheadline>
         </div>
