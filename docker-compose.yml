@@ -33,7 +33,7 @@ services:
     working_dir: /app
     volumes:
       - ./mini-app:/app
-    command: ['npm', 'run', 'build']
+    command: ['/bin/sh', '-c', 'npm install && npm run build']
     ports:
       - '6969'
     networks:
