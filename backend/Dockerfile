@@ -1,5 +1,5 @@
 # backend/Dockerfile
-FROM ghcr.io/railwayapp/nixpacks:latest
+FROM railwayapp/nixpacks:latest
 
 # Set working directory and copy application code
 WORKDIR /app
