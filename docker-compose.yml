@@ -19,7 +19,7 @@ services:
       - 'traefik.http.services.backend.loadbalancer.server.port=8000'
 
   frontend:
-    image: node:latest
+    image: node:23
     working_dir: /app
     volumes:
       - ./mini-app:/app
