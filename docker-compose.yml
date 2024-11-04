@@ -2,13 +2,11 @@ version: '3.9'
 
 services:
   backend:
-    image: python:3.12-slim
-    working_dir: /app
-    volumes:
-      - ./backend:/app
-    command: ['/bin/sh', '-c', 'pip install poetry && poetry install && poetry run uvicorn main:app --host 0.0.0.0 --port 8000']
+    build:
+      context: ./backend
+      dockerfile: Dockerfile
     ports:
-      - '8000'
+      - '8000:8000'
     networks:
       - dokploy-network
     labels:
@@ -19,13 +17,11 @@ services:
       - 'traefik.http.services.backend.loadbalancer.server.port=8000'
 
   frontend:
-    image: node:23
-    working_dir: /app
-    volumes:
-      - ./mini-app:/app
-    command: ['/bin/sh', '-c', 'npm install && npm i sharp && npm run build && npm start']
+    build:
+      context: ./mini-app
+      dockerfile: Dockerfile
     ports:
-      - '6969'
+      - '6969:6969'
     networks:
       - dokploy-network
     labels:
