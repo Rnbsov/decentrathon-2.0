@@ -24,7 +24,6 @@ function Profile() {
         try {
           const response = await xiorClassic.get(`/${user.id}`)
           const data = await response.data
-          console.log('🚀 ~ fetchProfilePicture ~ data:', data)
           setSrc(data.src)
         } catch (error) {
           console.error('Error fetching profile picture:', error)
@@ -76,7 +75,7 @@ function Profile() {
           <p className='p-4'>
             <p className='text-black/70'> Feel free to write to an email:</p>
             <br />
-            <span className='font-bold'>help@med.kz</span>
+            <span className='font-bold'>help@med.kz + {src}</span>
           </p>
         </div>
       </div>

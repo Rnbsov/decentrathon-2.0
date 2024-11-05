@@ -9,7 +9,7 @@ const nextConfig = {
     ignoreDuringBuilds: true
   },
   images: {
-    domains: ['fps.cdnpk.net']
+    domains: ['fps.cdnpk.net', 'medicare-backend.unilabs.studio']
   },
   typescript: {
     // !! WARN !!
