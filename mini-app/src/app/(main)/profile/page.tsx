@@ -24,6 +24,7 @@ function Profile() {
         try {
           const response = await xiorClassic.get(`/${user.id}`)
           const data = await response.data
+          console.log('🚀 ~ fetchProfilePicture ~ data:', data)
           setSrc(data.src)
         } catch (error) {
           console.error('Error fetching profile picture:', error)
